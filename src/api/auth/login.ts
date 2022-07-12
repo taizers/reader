@@ -1,14 +1,17 @@
 import http from '../../http';
 
 type ValueType = {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 };
-
+  
 type ResponseType = {
-  access_token: string;
+    id: string;
+    name: string;
+    email: string;
+    token: string;
 };
 
 export const login = (data: ValueType) => {
-  return http.post<ResponseType>('/api/auth/login', data);
+  return http.post<ResponseType>('api/auth/login', data);
 }

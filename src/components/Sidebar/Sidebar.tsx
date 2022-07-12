@@ -1,5 +1,5 @@
 import React from "react";
-
+import { menuItems } from "../../router/menu";
 
 const Sidebar = () => {
 

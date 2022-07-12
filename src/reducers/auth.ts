@@ -2,6 +2,8 @@ import {
     LOGIN,
     LOGIN_FAILED,
     LOGIN_SUCCESSED,
+    SIGNUP,
+    SIGNUP_FAILED,
 } from '../constants/types';
 
 const initialState = {
@@ -14,21 +16,31 @@ const reducer = (state = initialState, action: {type: string; payload: any}) => 
 
   switch (type) {
     case LOGIN:
-      return {
-        ...state,
-        isLoading: true,
-      };
+        return {
+            ...state,
+            isLoading: true,
+        };
     case LOGIN_SUCCESSED:
-      return {
-        ...state,
-        isLoading: false,
-        user: payload.user,
-      };
+        return {
+            ...state,
+            isLoading: false,
+            user: payload.user,
+        };
     case LOGIN_FAILED:
-      return {
-        ...state,
-        isLoading: false,
-      };
+        return {
+            ...state,
+            isLoading: false,
+        };
+    case SIGNUP:
+        return {
+          ...state,
+          isLoading: true,
+        };
+    case SIGNUP_FAILED:
+        return {
+          ...state,
+          isLoading: false,
+        };
     default:
       return {
         ...state,

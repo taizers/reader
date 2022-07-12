@@ -2,7 +2,11 @@ import {
     LOGIN,
     LOGIN_SUCCESSED,
     LOGIN_FAILED,
-    LOGOUT
+    LOGOUT,
+    SIGNUP,
+    SIGNUP_SUCCESSED,
+    SIGNUP_FAILED,
+    LOGIN_LOADING,
 } from '../constants/types'
 
 export const login = (data: {email: string; password: string}) => ({
@@ -14,8 +18,26 @@ export const loginSuccessed= () => ({
     type: LOGIN_SUCCESSED,
 });
 
+export const setAuthLoading= (bool: boolean) => ({
+    type: LOGIN_LOADING,
+    payload: bool,
+});
+
 export const loginFailed= () => ({
     type: LOGIN_FAILED,
+});
+
+export const signUp = (data: { email: string; password: string, name: string}) => ({
+    type: SIGNUP,
+    payload: data,
+});
+
+export const signUpSuccessed= () => ({
+    type: SIGNUP_SUCCESSED,
+});
+
+export const signUpFailed= () => ({
+    type: SIGNUP_FAILED,
 });
 
 export const logout= () => ({
