@@ -15,7 +15,9 @@ const PrivateRoute: FC<PrivateRouteType> = (props) => {
 
   return (
     <AppContainer>
-      <MainContent>{isAuth ? component : <Navigate to={'/login'} />}</MainContent>
+      <Sidebar>
+        <MainContent>{isAuth ? component : <Navigate to={'/login'} />}</MainContent>
+      </Sidebar>
     </AppContainer>
   );
 };

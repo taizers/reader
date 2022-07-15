@@ -10,7 +10,7 @@ const PublicRoute: FC<PublicRouteType> = (props) => {
   const { component } = props;
   const isAuth = isToken();
 
-  return <>{!isAuth ? component : <Navigate to={'/profile'} />}</>;
+  return <>{!isAuth ? component : <Navigate to={'/groups'} />}</>;
 };
 
 export default PublicRoute;

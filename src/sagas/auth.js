@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all, fork, select } from "redux-saga/effects";
+import { call, put, takeEvery, all, fork } from "redux-saga/effects";
 import { auth as authApi } from '../api/index';
 import { auth as authAction } from '../actions/index';
 import {

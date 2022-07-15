@@ -1,91 +1,85 @@
-const db = require('../db');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const userService = require('../service/user.service');
+const { validationResult } = require('express-validator');
+const ApiError = require('../exceptions/api.errors');
 
-class UserController {
-    async login(req, res) {
+class AuthController {
+    async login(req, res, next) {
         try {
-            const {email, password} = req.body;
-
-            if (!(email && password)) {
-                return res.status(400).send("All input is required");
+            const errors = validationResult(req);
+            
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
             }
 
-            const userData = await db.query('SELECT * FROM users where email = $1', [email]);
+            const { email, password } = req.body;
 
-            const user = userData.rows[0];
+            const userData = await userService.login(email, password);
 
-            if (!user) {
-                return res.status(404).send('User not exist');
-            }
-
-            if (await bcrypt.compare(password, user.password)) {
-                const token = jwt.sign(
-                    { user_id: user._id, email },
-                    process.env.TOKEN_KEY,
-                    {
-                      expiresIn: "2h",
-                    }
-                );
-
-                user.token = token;
-                user.password = null;
-
-                 res.status(200).json(user);
-            } else {
-                res.status(400).send('Invalid password');
-            }
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly: true, secure: true})
+            return res.status(200).json(userData);
 
         } catch (error) {
-            console.log(error);
+            next(error);
         }
 
     }
 
-    async logout(req, res) {
-        const users = await db.query('SELECT * FROM users');
-        res.json(users.rows);
+    async logout(req, res, next) {
+        try {
+            const { refreshToken } = req.cookie;
+
+            await userService.logout(refreshToken);
+
+            res.clearCookie('refreshToken');
+            res.status(200);
+        } catch (error) {
+            next(error);
+        }   
     }
 
-    async signUp(req, res) {
+    async signUp(req, res, next) {
         try {
+            const errors = validationResult(req);
+
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
+            }
+
             const { name, email, password } = req.body;
 
-            if (!(email && password && name)) {
-                return res.status(400).send("All input is required");
-            }
+            const userData = await userService.signUp(email, password, name);
 
-            const oldUser = await db.query('SELECT * FROM users where email = $1', [email]);
-
-            if (oldUser.rows[0]) {
-                console.log('ffffffffffffffffff');
-                return res.status(409).send("User Already Exist. Please Login");
-            }
-
-            const encryptedPassword = await bcrypt.hash(password, 10);
-
-            const newPerson = await db.query(
-                'INSERT INTO users (name, email, password) values ($1, $2, $3) RETURNING *', [name, email, encryptedPassword]
-                );
-
-            const user = newPerson.rows[0];
-
-            const token = jwt.sign(
-                { user_id: user.id, email },
-                process.env.TOKEN_KEY,
-                {
-                    expiresIn: "2h",
-                }
-                );
-            user.token = token;
-            user.password = null;
-
-            res.status(201).send('Created');
-
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly: true, secure: true})
+            return res.status(200).json(userData);
+            
         } catch (error) {
-            console.log(error);
+            next(error);
+        }
+    }
+
+    async refresh(req, res, next) {
+        try {
+            const { refreshToken } = req.cookie;
+
+            const userData = await userService.refresh(refreshToken);
+
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly: true, secure: true})
+            return res.status(200).json(userData);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async activate(req, res, next) {
+        try {
+            const activationLink = req.params.link;
+            await userService.activate(activationLink);
+
+            return res.redirect(process.env.CLIENT_URL);
+        } catch (error) {
+            next(error);
         }
     }
 }
 
-module.exports = new UserController(); 
+module.exports = new AuthController(); 

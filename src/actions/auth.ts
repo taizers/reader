@@ -6,7 +6,7 @@ import {
     SIGNUP,
     SIGNUP_SUCCESSED,
     SIGNUP_FAILED,
-    LOGIN_LOADING,
+    SET_LOGIN_LOADING,
 } from '../constants/types'
 
 export const login = (data: {email: string; password: string}) => ({
@@ -19,7 +19,7 @@ export const loginSuccessed= () => ({
 });
 
 export const setAuthLoading= (bool: boolean) => ({
-    type: LOGIN_LOADING,
+    type: SET_LOGIN_LOADING,
     payload: bool,
 });
 
