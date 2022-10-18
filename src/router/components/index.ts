@@ -1,4 +1,5 @@
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import PublicRouteWithSideBar from './PublicRouteWithSideBar';
 
-export default { PrivateRoute, PublicRoute };
+export { PrivateRoute, PublicRoute, PublicRouteWithSideBar };

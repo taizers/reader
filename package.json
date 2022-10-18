@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
@@ -19,8 +20,10 @@
     "classnames": "^2.3.1",
     "connected-react-router": "^6.9.2",
     "lodash": "^4.17.21",
+    "prettier": "^2.7.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-hot-toast": "^2.3.0",
     "react-intl": "^6.0.3",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
@@ -35,9 +38,10 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "pretty": "prettier --config --write \"./{src,test}/**/*.{js,json}\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

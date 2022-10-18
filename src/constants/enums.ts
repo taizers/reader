@@ -3,5 +3,6 @@ export enum Sidebar {
     Users = 'Пользователи',
     Login = 'Войти',
     Profile = 'Профиль',
+    Books = 'Книги',
     Logout = 'Выйти',
 }

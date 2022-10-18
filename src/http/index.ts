@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-import { token } from './interceptors';
+import { getToken } from '../utils/index';
 
-const instance = axios.create({
-  baseURL: 'http://localhost:5000/',
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -12,6 +13,10 @@ const instance = axios.create({
   timeout: 180000,
 });
 
-token(instance);
+api.interceptors.request.use((config: any) => {
+  config.headers.Authorization = `Bearer ${getToken()}`;
+  return config;
+});
 
-export default instance;
+
+export default api;

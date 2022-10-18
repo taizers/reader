@@ -1,5 +1,6 @@
 import {
-    LOGIN_SUCCESSED, LOGOUT,
+    LOGIN_SUCCESSED,
+    SET_AUTH_LOADING,
 } from '../constants/types';
 
 const initialState = {
@@ -15,9 +16,14 @@ const reducer = (state = initialState, action: {type: string; payload: any}) => 
     case LOGIN_SUCCESSED:
         return {
             ...state,
-            authUser: payload.user,
+            authUser: payload,
             isAuth: true,
         };
+    case SET_AUTH_LOADING:
+      return {
+          ...state,
+          isLoading: payload,
+      };
     default:
       return {
         ...state,

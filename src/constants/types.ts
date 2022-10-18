@@ -1,4 +1,4 @@
-//Autorization
+//AUTH
 
 export const LOGIN = 'LOGIN';
 export const LOGIN_SUCCESSED = 'LOGIN_SUCCESSED';
@@ -7,7 +7,8 @@ export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
 export const SIGNUP_SUCCESSED = 'SIGNUP_SUCCESSED';
 export const SIGNUP_FAILED = 'SIGNUP_FAILED';
-export const SET_LOGIN_LOADING = 'SET_LOGIN_LOADING';
+export const SET_AUTH_LOADING = 'SET_AUTH_LOADING';
+export const CHECK_AUTH = 'CHECK_AUTH';
 
 //USERS
 
@@ -24,3 +25,13 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_USER_SUCCESSED = 'UPDATE_USER_SUCCESSED';
 export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 export const SET_USERS_LOADING = 'SET_USERS_LOADING';
+
+//BOOKS
+
+export const SET_BOOKS_LOADING = 'SET_BOOKS_LOADING';
+export const GET_BOOKS = 'GET_BOOKS';
+export const GET_AUTHORS = 'GET_AUTHORS';
+export const GET_AUTHORS_SUCCESSED = 'GET_AUTHORS_SUCCESSED';
+export const GET_BOOKS_SUCCESSED = 'GET_BOOKS_SUCCESSED';
+
+

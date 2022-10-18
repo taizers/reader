@@ -12,7 +12,8 @@ import {
     UPDATE_USER,
     UPDATE_USER_FAILED,
     UPDATE_USER_SUCCESSED,
-} from '../constants/types'
+} from '../constants/types';
+import { UpdateUserType, UserType, UsersType } from '../constants/tsSchemes';
 
 export const getAllUsers = () => ({
     type: GET_ALL_USERS,
@@ -22,26 +23,28 @@ export const getAllUsersFailed= () => ({
     type: GET_ALL_USERS_FAILED,
 });
 
-export const getAllUsersSuccessed= (data: Array<object>) => ({
+export const getAllUsersSuccessed= (data: UsersType) => ({
     type: GET_ALL_USERS_SUCCESSED,
     payload: data,
 });
 
-export const getUser = () => ({
+export const getUser = (id: string) => ({
     type: GET_USER,
+    payload: id,
 });
 
 export const getUserFailed= () => ({
     type: GET_USER_FAILED,
 });
 
-export const getUserSuccessed= (data: {id: string; name: string; email: string}) => ({
+export const getUserSuccessed= (data: UserType) => ({
     type: GET_USER_SUCCESSED,
     payload: data,
 });
 
-export const updateUser = () => ({
+export const updateUser = (data: UpdateUserType) => ({
     type: UPDATE_USER,
+    payload: data,
 });
 
 export const updateUserFailed= () => ({
@@ -53,8 +56,9 @@ export const updateUserSuccessed= (data: {id: string; name: string; email: strin
     payload: data,
 });
 
-export const deleteUser = () => ({
+export const deleteUser = (id: string) => ({
     type: DELETE_USER,
+    payload: id,
 });
 
 export const deleteUserFailed= () => ({

@@ -6,13 +6,6 @@ type ValueType = {
   name: string;
 };
 
-type ResponseType = {
-  id: string;
-  name: string;
-  email: string;
-  token: string;
-};
-
 export const signUp = (data: ValueType) => {
-  return http.post<ResponseType>('api/auth/signUp', data);
+  return http.post<AuthenticatorResponse>('auth/signUp', data);
 }

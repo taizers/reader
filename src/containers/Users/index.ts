@@ -1,11 +1,12 @@
 import { Users } from './Users';
 import { connect } from 'react-redux';
-import { getAllUsers } from '../../actions/users';
+
+import { getAllUsers, deleteUser } from '../../actions/users';
+import { UsersType } from '../../constants/tsSchemes';
 
 const mapStateToProps = (state: { users: { 
     isLoading: boolean,
-    user: {id: string; name: string; email: string; password: string;},
-    users: Array<{id: string; name: string; email: string; password: string;}>
+    users: UsersType,
 }}) => ({
   isLoading: state.users.isLoading,
   users: state.users.users,
@@ -13,6 +14,7 @@ const mapStateToProps = (state: { users: {
 
 const mapDispatchToProps = (dispatch: any) => ({
     getAllUsers: () => dispatch(getAllUsers()),
+    deleteUser: (id: string) => dispatch(deleteUser(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

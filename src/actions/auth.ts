@@ -6,41 +6,50 @@ import {
     SIGNUP,
     SIGNUP_SUCCESSED,
     SIGNUP_FAILED,
-    SET_LOGIN_LOADING,
-} from '../constants/types'
+    SET_AUTH_LOADING,
+    CHECK_AUTH,
+} from '../constants/types';
+import { SignUpUserType, LoginUserType, UserType } from '../constants/tsSchemes';
 
-export const login = (data: {email: string; password: string}) => ({
+
+export const login = (data: { data: LoginUserType; history: any }) => ({
     type: LOGIN,
     payload: data,
 });
 
-export const loginSuccessed= () => ({
+export const loginSuccessed = (user: UserType) => ({
     type: LOGIN_SUCCESSED,
+    payload: user,
 });
 
-export const setAuthLoading= (bool: boolean) => ({
-    type: SET_LOGIN_LOADING,
+export const setAuthLoading = (bool: boolean) => ({
+    type: SET_AUTH_LOADING,
     payload: bool,
 });
 
-export const loginFailed= () => ({
+export const loginFailed = () => ({
     type: LOGIN_FAILED,
 });
 
-export const signUp = (data: { email: string; password: string, name: string}) => ({
+export const signUp = (data: { data: SignUpUserType; history: any }) => ({
     type: SIGNUP,
     payload: data,
 });
 
-export const signUpSuccessed= () => ({
+export const signUpSuccessed = () => ({
     type: SIGNUP_SUCCESSED,
 });
 
-export const signUpFailed= () => ({
+export const signUpFailed = () => ({
     type: SIGNUP_FAILED,
 });
 
-export const logout= () => ({
+export const logout = (history: any) => ({
     type: LOGOUT,
+    payload: {history}
+});
+export const checkAuth = (history: any) => ({
+    type: CHECK_AUTH,
+    payload: {history}
 });
 

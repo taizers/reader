@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router-dom';
 import { menuItems, secondMenuItems } from '../../router/menu';
+import { Sidebar as SidebarEnum } from '../../constants/enums';
 
 const drawerWidth = 240;
 
@@ -73,9 +74,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 type Sidebartype = {
     children: any;
     isAuth: boolean;
+    logout: (history: any) => Promise<any>;
 }
 
-export const Sidebar: FC<Sidebartype> = ({ children, isAuth }) => {
+export const Sidebar: FC<Sidebartype> = ({ children, isAuth, logout }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   let history = useNavigate();
@@ -88,8 +90,22 @@ export const Sidebar: FC<Sidebartype> = ({ children, isAuth }) => {
     setOpen(false);
   };
 
+  const getAccess = (item: { access: string; }) => {
+    if (item.access === 'private' && isAuth) {
+      return true;
+    }
+    if (item.access === 'public' && !isAuth) {
+      return true;
+    }
+    if (item.access === 'all') {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -128,7 +144,7 @@ export const Sidebar: FC<Sidebartype> = ({ children, isAuth }) => {
         <Divider />
         <List>
           {menuItems.map((item) => (
-              (isAuth === item.accessWithAuth) && 
+              getAccess(item) && 
                 <ListItem key={item.title} disablePadding>
                   <ListItemButton onClick={()=> {history(item.path)}}>
                     <ListItemIcon>
@@ -142,9 +158,9 @@ export const Sidebar: FC<Sidebartype> = ({ children, isAuth }) => {
         <Divider />
         <List>
           {secondMenuItems.map((item) => (
-            (isAuth === item.accessWithAuth) && 
+            getAccess(item) && 
               <ListItem key={item.title} disablePadding>
-                  <ListItemButton onClick={() => history(item.path)}>
+                  <ListItemButton onClick={() => {item.title === SidebarEnum.Logout ? logout(history) : history(item.path)}}>
                       <ListItemIcon>
                         {<item.icon/>}
                       </ListItemIcon>

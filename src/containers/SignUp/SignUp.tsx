@@ -1,10 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,6 +10,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
+import { SignUpUserType } from '../../constants/tsSchemes';
 
 const Copyright = (props: any) => {
   return (
@@ -27,18 +28,14 @@ const Copyright = (props: any) => {
 }
 
 type LoginTypes = {
-    signUp : (data: { email: string; password: string, name: string }) => Promise<any>;
+    signUp : (data: { data: SignUpUserType; history: any }) => Promise<any>;
     isLoading: boolean;
 }
 
 const theme = createTheme();
 
 export const SignUp: FC<LoginTypes> = ({ signUp, isLoading }) => {
-    const [disableButton, setDisableButton] = useState(false);
-
-    useEffect(() => {
-
-    }, []);
+    let history = useNavigate();
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -52,12 +49,13 @@ export const SignUp: FC<LoginTypes> = ({ signUp, isLoading }) => {
         };
 
         if (data.email && data.password && data.name && data.password === secondPassword) {
-            signUp(data);
+            signUp({ data, history });
         }
     };
 
     return (
         <ThemeProvider theme={theme}>
+        <ArrowBackIcon fontSize='large' sx={{ ml: 10, mt: -2, position: "absolute" }} onClick={() => history('/')}/>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -119,7 +117,6 @@ export const SignUp: FC<LoginTypes> = ({ signUp, isLoading }) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    disabled={disableButton}
                     sx={{ mt: 3, mb: 2 }}
                 >
                     Зарегистрироваться

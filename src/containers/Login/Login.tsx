@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
+import { LoginUserType } from '../../constants/tsSchemes';
 
 const Copyright = (props: any) => {
   return (
@@ -27,18 +30,14 @@ const Copyright = (props: any) => {
 }
 
 type LoginTypes = {
-    login : (data: { email: string; password: string }) => Promise<any>;
+    login : (data: { data: LoginUserType; history: any }) => Promise<any>;
     isLoading: boolean;
 }
 
 const theme = createTheme();
 
 export const Login: FC<LoginTypes> = ({ login, isLoading }) => {
-    const [disableButton, setDisableButton] = useState(false);
-
-    useEffect(() => {
-
-    }, []);
+    let history = useNavigate();
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -49,12 +48,13 @@ export const Login: FC<LoginTypes> = ({ login, isLoading }) => {
         };
 
         if (data.email && data.password) {
-            login(data);
+            login({ data, history });
         }
     };
 
     return (
         <ThemeProvider theme={theme}>
+        <ArrowBackIcon fontSize='large' sx={{ ml: 10, mt: -2, position: "absolute" }} onClick={() => history('/')}/>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -100,7 +100,6 @@ export const Login: FC<LoginTypes> = ({ login, isLoading }) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    disabled={disableButton}
                     sx={{ mt: 3, mb: 2 }}
                 >
                     Войти

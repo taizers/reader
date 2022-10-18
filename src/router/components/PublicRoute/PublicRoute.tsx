@@ -1,16 +1,11 @@
 import React, { FC } from 'react';
 import { Navigate } from 'react-router-dom';
-import { isToken } from '../../../utils';
 
 type PublicRouteType = {
   component: React.ReactNode;
+  isAuth: boolean;
 };
 
-const PublicRoute: FC<PublicRouteType> = (props) => {
-  const { component } = props;
-  const isAuth = isToken();
-
-  return <>{!isAuth ? component : <Navigate to={'/profile'} />}</>;
+export const PublicRoute: FC<PublicRouteType> = ({ component, isAuth }) => {
+  return <>{!isAuth ? component : <Navigate to={'/'} />}</>;
 };
-
-export default PublicRoute;
