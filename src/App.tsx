@@ -1,9 +1,10 @@
 import React, { useEffect, FC } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 
 import Main from './containers/Main/index';
+import NotFound from './components/NotFound/index';
 import Login from './containers/Login/index';
 import SignUp from './containers/SignUp/index';
 import Users from './containers/Users/index';
@@ -21,9 +22,12 @@ type AppType = {
 
 const App: FC<AppType> = ({ checkAuth }) => {
   const history = useNavigate();
+  let location = useLocation();
 
   useEffect(()=>{
     const token = getToken();
+  console.log(`${window.location.origin}`);
+
     if (token) {
       console.log('555');
       checkAuth(history);
@@ -33,14 +37,15 @@ const App: FC<AppType> = ({ checkAuth }) => {
   return (
     <>
       <Routes>
-          <Route path='/login' element={<PublicRoute component={<Login />}/>} />
-          <Route path='/signUp' element={<PublicRoute component={<SignUp />}/>} />
-          <Route path='/users' element={<PrivateRoute component={<Users />}/>} />
-          <Route path='/users/:id' element={<PrivateRoute component={<SingleUser />}/>} />
-          <Route path='/profile' element={<PrivateRoute component={<Profile />}/>} />
-          <Route path='/books' element={<PrivateRoute component={<Books />}/>} />
-          <Route path='/books/:id' element={<PrivateRoute component={<Book />}/>} />
-          <Route path="/" element={<PublicRouteWithSideBar component={<Main />}/>} />
+          <Route path={`${window.location.origin}/login`} element={<PublicRoute component={<Login />}/>} />
+          <Route path={`${window.location.origin}/signUp`} element={<PublicRoute component={<SignUp />}/>} />
+          <Route path={`${window.location.origin}/users`} element={<PrivateRoute component={<Users />}/>} />
+          <Route path={`${window.location.origin}/users/:id`} element={<PrivateRoute component={<SingleUser />}/>} />
+          <Route path={`${window.location.origin}/profile`} element={<PrivateRoute component={<Profile />}/>} />
+          <Route path={`${window.location.origin}/books`} element={<PrivateRoute component={<Books />}/>} />
+          <Route path={`${window.location.origin}/books/:id`} element={<PrivateRoute component={<Book />}/>} />
+          <Route path={'/'} element={<PublicRouteWithSideBar component={<Main />}/>} />
+          <Route path={'*'} element={<PublicRouteWithSideBar component={<NotFound />}/>} />
       </Routes>
       <Toaster
         position="bottom-right"
