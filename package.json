@@ -39,7 +39,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rimraf ./build && react-scripts build",
     "test": "react-scripts test",
     "pretty": "prettier --config --write \"./{src,test}/**/*.{js,json}\"",
     "eject": "react-scripts eject"
