@@ -123,7 +123,7 @@ export const SignUp: FC<LoginTypes> = ({ signUp, isLoading }) => {
                 </Button>
                 <Grid container>
                     <Grid item>
-                        <Link href="/login" variant="body2">
+                        <Link href="/#/login" variant="body2">
                         {"Есть аккаунт? Войти"}
                         </Link>
                     </Grid>

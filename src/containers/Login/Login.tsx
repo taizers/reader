@@ -106,12 +106,12 @@ export const Login: FC<LoginTypes> = ({ login, isLoading }) => {
                 </Button>
                 <Grid container>
                 <Grid item xs>
-                    <Link href="/forgotPassword" variant="body2">
+                    <Link href="/#/forgotPassword" variant="body2">
                     Забыли пароль?
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/signUp" variant="body2">
+                    <Link href="/#/signUp" variant="body2">
                     {"Нет аккаунта? Зарегистрироваться"}
                     </Link>
                 </Grid>
