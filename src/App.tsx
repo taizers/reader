@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 
@@ -22,7 +22,6 @@ type AppType = {
 
 const App: FC<AppType> = ({ checkAuth }) => {
   const history = useNavigate();
-  let location = useLocation();
 
   useEffect(()=>{
     const token = getToken();
