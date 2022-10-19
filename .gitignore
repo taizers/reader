@@ -4,14 +4,10 @@
 /backend/node_modules
 /node_modules
 /.pnp
-/backend/.env
 .pnp.js
 
 # testing
 /coverage
-
-# production
-
 
 # misc
 .DS_Store
@@ -20,6 +16,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+/backend/.env
 
 npm-debug.log*
 yarn-debug.log*
